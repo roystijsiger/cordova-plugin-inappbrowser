@@ -1306,8 +1306,20 @@ public class InAppBrowser extends CordovaPlugin {
                     LOG.e(LOG_TAG, "Error sending sms " + url + ":" + e.toString());
                 }
             }
+            else{
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    cordova.getActivity().startActivity(intent);
+                    return true;
+                }
+                catch(android.content.ActivityNotFoundException e){
+                        LOG.e(LOG_TAG, "Failed to open inapp");
+                }
+            }
+
             // Test for whitelisted custom scheme names like mycoolapp:// or twitteroauthresponse:// (Twitter Oauth Response)
-            else if (!url.startsWith("http:") && !url.startsWith("https:") && url.matches("^[A-Za-z0-9+.-]*://.*?$")) {
+            /*else if (!url.startsWith("http:") && !url.startsWith("https:") && url.matches("^[A-Za-z0-9+.-]*://.*?$")) {
                 if (allowedSchemes == null) {
                     String allowed = preferences.getString("AllowedSchemes", null);
                     if(allowed != null) {
@@ -1340,7 +1352,7 @@ public class InAppBrowser extends CordovaPlugin {
                         }
                     }
                 }
-            }
+            }*/
 
             if (useBeforeload) {
                 this.waitForBeforeload = true;
