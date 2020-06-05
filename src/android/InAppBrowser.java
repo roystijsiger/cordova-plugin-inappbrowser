@@ -1316,7 +1316,7 @@ public class InAppBrowser extends CordovaPlugin {
                 }
                 if (allowedSchemes != null) {
                     for (String scheme : allowedSchemes) {
-                        if (url.contains('*'){
+                        if (url.contains('*')){
                             try {
                                 JSONObject obj = new JSONObject();
                                 obj.put("type", "customscheme");
