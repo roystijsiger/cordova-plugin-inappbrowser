@@ -1316,6 +1316,17 @@ public class InAppBrowser extends CordovaPlugin {
                 }
                 if (allowedSchemes != null) {
                     for (String scheme : allowedSchemes) {
+                        if (url.contains('*'){
+                            try {
+                                JSONObject obj = new JSONObject();
+                                obj.put("type", "customscheme");
+                                obj.put("url", url);
+                                sendUpdate(obj, true);
+                                override = true;
+                            } catch (JSONException ex) {
+                                LOG.e(LOG_TAG, "Custom Scheme URI passed in has caused a JSON error.");
+                            }
+                        }
                         if (url.startsWith(scheme)) {
                             try {
                                 JSONObject obj = new JSONObject();
